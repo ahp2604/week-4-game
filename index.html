@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container main">
+
+        <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">Crystal Collector</h1>
+                    <p class="lead">Each crystal will have a random value. Try to match the sum of those values to the chosen number in the blue box.</p>
+
+                </div>
+
+                <div class="resetbutton">
+                    <button type="button" class="btn btn-warning">Reset Streak</button>
+                </div>
+
+                
+        </div>
+
+        <div class="row">
+
+            <div class="crystals"> </div>
+        </div>
+
+        <div class="row score">
+            <div class="col-xs-6 winningStreak">
+                    
+                <h4>Winning Streak <span class=" winCount badge badge-success ">new</span></h4>
+
+            </div>
+
+
+            <div class="col-xs-6 losingStreak">
+
+                    <h4>Losing Streak <span class=" loosingCount badge badge-danger ">new</span></h4>
+            </div>
+
+        </div>
+
+        <div class="row middle">
+
+                <div class="col-xs-4 chosenNumber">
+
+                        <div class="col-xs-12">
+                            <h3>Match this Number</h3>
+                        </div>
+                     
+        
+                        <div class="col-xs-12">
+                            <span class=" randomNumber badge badge-pill badge-primary"></span>
+                        </div>
+        
+                </div>
+
+        </div>
+
+        <div class="row">
+                
+            <div class="col-xs-6 yourNumber">
+
+                    <span class="sum badge badge-pill badge-dark"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+<script type= "text/javascript">
+
+//player will be given a random number at the beginning of the game 
+//four crystals
+//random value for crystals
+//values of each crystal will be hidden until u click
+//will add all value togehter, if larger than the randomly given # at the beginning, u loss. 
+// randome number between 1-12
+
+
+var random_result = 0;
+var priorValue = 0;
+var loose = 0;
+var win = 0; 
+var picture = ["https://cdn.pixabay.com/photo/2016/09/21/20/24/crystal-1685590__340.jpg",
+
+"https://thumb1.shutterstock.com/display_pic_with_logo/1483244/736064353/stock-photo-amazing-colorful-quartz-rainbow-flame-blue-aqua-aura-crystal-cluster-closeup-macro-isolated-on-736064353.jpg",
+
+"https://s3.amazonaws.com/user-media.venngage.com/309792-c1a8e7d649b3710d98ec21feecc56adc.png",
+
+"https://image.shutterstock.com/display_pic_with_logo/1483244/458219668/stock-photo-quartz-rainbow-titanium-aura-crystal-cluster-on-black-background-458219668.jpg"]
+
+
+function startgame() {
+
+//reset and empy the numbers from previous round
+    $(".crystals").empty();          
+    priorValue = 0;               
+    random_result = 0;
+
+//Reset streaks
+    $(".loosingCount").html(loose);  
+    $(".winCount").html(win);
+    $(".sum").html("Current Sum: " + priorValue);
+    
+
+//pick random number from 19-120
+    random_result = Math.floor(Math.random()   *   102) + 19;
+    console.log("chosen number:  " + random_result);
+
+    $(".randomNumber").html(random_result);
+
+
+
+//create 4 crystals with class, and assign random values
+
+    for (var i = 0; i < 4; i++) {
+
+        var randNum = Math.floor(Math.random()   *  12) + 1;   // genertate random number 1-12
+
+        var crystal = $("<div>").attr({"class": "crystal", "value":randNum}); //create 4 crystal divs, assigned each div to a value = randnum
+            crystal.css({"background-image":"url("+picture[i]+")",   // passing pictures in the div
+                        
+        }); 
+                        
+        
+        
+        $(".crystals").append(crystal);   //adding div crystal to main div crystals
+
+
+        console.log(randNum);
+
+    };
+
+};
+startgame();   //start game the beginning
+
+
+// when click on any of the crystal
+$(document).on("click", ".crystal" , function(){
+
+
+    console.log($(this).attr("value"));
+
+    var crystalValue = parseInt($(this).attr("value"));  //create var to hold value of each crystal when clicked
+    //console.log(typeof crystalValue); // convert it to string 
+
+    priorValue += crystalValue;     //adding the new value to the previous value
+    $(".sum").html("Current Sum: " + priorValue);    //place the input under div sum
+
+
+    console.log(priorValue);
+
+    if(priorValue > random_result){
+        $(".sum").html("Current Sum: " + priorValue);
+
+
+        loose++;
+
+        startgame();
+
+    }else if(priorValue == random_result){
+
+        win++;
+        $(".winCount").html(win);
+        startgame();
+
+    }
+
+
+});
+
+
+
+
+    
+
+
+// reset button to reset all wiining and losing score
+//call funcstion start game 
+// win = 0
+// lose = 0
+
+
+$(document).on("click", ".btn" , function(){
+
+    win = 0;
+    loose = 0;
+    startgame();
+});                   //reset your streak.
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

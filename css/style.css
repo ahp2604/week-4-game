@@ -1,0 +1,72 @@
+.jumbotron{
+
+    position: relative;
+    min-height: 230px;
+
+}
+
+.resetbutton{
+
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.main{
+    background-color: lightblue;
+}
+
+.crystals{
+
+display: flex;
+justify-content: space-around;
+height: 200px;
+width: 100%;
+
+}
+
+
+
+.crystal{
+    height: 100px;
+    width: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}
+
+
+
+.score{
+
+    
+
+    justify-content: space-between;
+}
+
+.chosenNumber{
+
+    display: inline-flex;
+    flex-flow: column;
+    align-items: center;
+
+    
+}
+
+.randomNumber{
+
+    font-size: 80px;
+    
+}
+
+.middle{
+
+    justify-content: center;
+}
+
+.yourNumber{
+
+    font-size: 40px;
+    margin-bottom: 20px;
+}
